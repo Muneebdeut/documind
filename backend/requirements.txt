@@ -1,0 +1,31 @@
+fastapi==0.111.0
+uvicorn[standard]==0.30.1
+python-multipart==0.0.9
+pydantic==2.7.3
+pydantic-settings==2.3.1
+
+# Auth
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+
+# Database
+sqlalchemy==2.0.31
+asyncpg==0.29.0
+alembic==1.13.1
+
+# LangChain & AI
+langchain==0.2.6
+langchain-community==0.2.6
+langchain-openai==0.1.13
+langchain-google-genai==1.0.7
+langchain-chroma==0.1.2
+chromadb==0.5.3
+
+# PDF & Embeddings
+pypdf==4.2.0
+sentence-transformers==3.0.1
+
+# Utilities
+python-dotenv==1.0.1
+httpx==0.27.0
+aiofiles==23.2.1
