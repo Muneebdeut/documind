@@ -5,21 +5,30 @@ from typing import List, Optional
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import SentenceTransformerEmbeddings
 from langchain.schema import Document
 from app.config import settings
 
+
 class PDFProcessor:
     def __init__(self):
-        self.embeddings = SentenceTransformerEmbeddings(
-            model_name=settings.EMBEDDING_MODEL
-        )
+        # Lazy-loaded to avoid crashing at import time
+        self._embeddings = None
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
             chunk_overlap=200,
             length_function=len,
             separators=["\n\n", "\n", " ", ""]
         )
+
+    @property
+    def embeddings(self):
+        """Lazy-initialize the embedding model on first use."""
+        if self._embeddings is None:
+            from langchain_community.embeddings import SentenceTransformerEmbeddings
+            self._embeddings = SentenceTransformerEmbeddings(
+                model_name=settings.EMBEDDING_MODEL
+            )
+        return self._embeddings
 
     def load_and_split(self, file_path: str) -> List[Document]:
         """Load PDF and split into chunks."""
@@ -100,4 +109,5 @@ class PDFProcessor:
             pass
 
 
+# Module-level singleton — instantiation is safe now (no heavy work in __init__)
 pdf_processor = PDFProcessor()
