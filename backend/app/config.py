@@ -17,8 +17,9 @@ class Settings(BaseSettings):
     # AI Models
     OPENAI_API_KEY: Optional[str] = None
     GOOGLE_API_KEY: Optional[str] = None
+    GROQ_API_KEY: Optional[str] = None
     
-    # Choose provider: "openai" or "google"
+    # Choose provider: "openai", "google", or "groq"
     LLM_PROVIDER: str = "google"
     LLM_MODEL: str = "gemini-2.0-flash"
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
